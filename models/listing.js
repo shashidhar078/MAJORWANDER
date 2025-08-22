@@ -10,11 +10,17 @@ const listingSchema=new Schema({
         type:String,
     },
     image:{
-        type:String,
-        default:"https://unsplash.com/photos/mountain-peaks-illuminated-by-the-setting-sun-rJQZ1yYo-pg",
-        set:(v)=>{
-           return v ===""?"https://unsplash.com/photos/mountain-peaks-illuminated-by-the-setting-sun-rJQZ1yYo-pg":v;
+        url:{
+            type:String,
+            default:"https://unsplash.com/photos/mountain-peaks-illuminated-by-the-setting-sun-rJQZ1yYo-pg",
+            set:(v)=>{
+            return v ===""?"https://unsplash.com/photos/mountain-peaks-illuminated-by-the-setting-sun-rJQZ1yYo-pg":v;
+            }
+        },
+        filename:{
+            type:String 
         }
+        
     },
     price:{
         type:Number,
