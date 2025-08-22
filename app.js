@@ -30,9 +30,20 @@ app.get("/listings",async (req,res)=>{
     res.render("./listings/index.ejs",{allListings});
 })
 
+//create and new route
 app.get("/listings/new",(req,res)=>{
     res.render("./listings/new.ejs");
 })
+
+app.post("/listings",async (req,res)=>{
+    //let {title,description,image,price,location,country} = req.body
+    //previouslt we use to do like this 
+    //now we are using more compact form using object check for form we will understand
+    const newListing=new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
+})
+
 //show route implemented 
 // to represent price in indian rupess we use toLocaleString
 app.get("/listings/:id",async (req,res)=>{
@@ -40,6 +51,7 @@ app.get("/listings/:id",async (req,res)=>{
     const showListings=await Listing.findById(id)
     res.render("./listings/show.ejs",{showListings});
 })
+
 
 // app.get("/testListing",async (req,res)=>{
 //     const newlisting=new Listing({
