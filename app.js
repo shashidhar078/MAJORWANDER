@@ -4,6 +4,7 @@ const mongoose=require('mongoose');
 const Listing=require("./models/listing.js");
 const path=require('path');
 const methodOverride=require('method-override');
+const ejsmate=require('ejs-mate');
 
 const MONGO_URL="mongodb://127.0.0.1:27017/wanderlust";
 main().then((res)=>{
@@ -19,8 +20,10 @@ async function main(){
 
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
+app.set(express.static(path.join(__dirname,"public")));
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride("_method"));
+app.engine("ejs",ejsmate);
 
 app.get("/",(req,res)=>{
     res.send("Hello im groot!!");
