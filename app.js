@@ -40,14 +40,21 @@ app.get("/listings/new",(req,res)=>{
     res.render("./listings/new.ejs");
 })
 
-app.post("/listings",async (req,res)=>{
-    //let {title,description,image,price,location,country} = req.body
-    //previouslt we use to do like this 
-    //now we are using more compact form using object check for form we will understand
-    const newListing=new Listing(req.body.listing);
+app.post("/listings", async (req, res) => {
+    // Assuming your form data is nested in req.body.listing
+    const newListingData = req.body.listing;
+
+    // Check if the image.url is missing or an empty string
+    if (!newListingData.image || !newListingData.image.url) {
+        newListingData.image = {
+            url: "https://images.unsplash.com/photo-1552733407-5d5c46c3bb3b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fHRyYXZlbHxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=800&q=60"
+        };
+    }
+    
+    const newListing = new Listing(newListingData);
     await newListing.save();
     res.redirect("/listings");
-})
+});
 
 //show route implemented 
 // to represent price in indian rupess we use toLocaleString
